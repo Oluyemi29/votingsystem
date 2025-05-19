@@ -9,10 +9,13 @@ import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { IoEyeSharp } from "react-icons/io5";
+import { HiMiniEyeSlash } from "react-icons/hi2";
 
 const Login = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const formSchema = z.object({
     matric: z
       .string()
@@ -93,8 +96,13 @@ const Login = () => {
             isInvalid={!!errors.password}
             {...register("password")}
             label={"Password"}
-            type="password"
+            type={passwordVisible ? "text" : "password"}
             placeholder="Password"
+            endContent={
+              <div className="cursor-pointer" onClick={() => setPasswordVisible(!passwordVisible)}>
+                {passwordVisible ? <HiMiniEyeSlash /> : <IoEyeSharp />}
+              </div>
+            }
           />
           {loading ? (
             <Button

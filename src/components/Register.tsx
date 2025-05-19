@@ -10,10 +10,13 @@ import { toast } from "react-hot-toast";
 import { AllDepartments, AllFaculties } from "@/category/Categories";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { IoEyeSharp } from "react-icons/io5";
+import { HiMiniEyeSlash } from "react-icons/hi2";
 
 const Register = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const [department, setDepartment] = React.useState<string>("");
   const [faculty, setFaculty] = React.useState<string>("");
   const [preview, setPreview] = useState<string>(
@@ -176,7 +179,15 @@ const Register = () => {
               isInvalid={!!errors.password}
               {...register("password")}
               label={"Password"}
-              type="password"
+              type={passwordVisible ? "text" : "password"}
+              endContent={
+                <div
+                  className="cursor-pointer"
+                  onClick={() => setPasswordVisible(!passwordVisible)}
+                >
+                  {passwordVisible ? <HiMiniEyeSlash /> : <IoEyeSharp />}
+                </div>
+              }
               placeholder="Password"
             />
             <div>

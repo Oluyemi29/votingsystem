@@ -8,8 +8,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AdminRegistering } from "@/app/api/Action";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
+import { IoEyeSharp } from "react-icons/io5";
+import { HiMiniEyeSlash } from "react-icons/hi2";
 
 const AdminRegister = () => {
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const formSchema = z.object({
     name: z
@@ -87,8 +90,13 @@ const AdminRegister = () => {
             isInvalid={!!errors.password}
             {...register("password")}
             label={"Password"}
-            type="password"
+            type={passwordVisible ? "text" : "password"}
             placeholder="Password"
+            endContent={
+              <div className="cursor-pointer" onClick={() => setPasswordVisible(!passwordVisible)}>
+                {passwordVisible ? <HiMiniEyeSlash /> : <IoEyeSharp />}
+              </div>
+            }
           />
           {loading ? (
             <Button
