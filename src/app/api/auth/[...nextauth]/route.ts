@@ -70,7 +70,7 @@ const authOptions: AuthOptions = {
     }),
   ],
   pages: {
-    signIn: "/login /admin/login",
+    signIn: "/login",
   },
   session: {
     strategy: "jwt",
