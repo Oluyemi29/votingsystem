@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     url: "https://votingsystem-flax.vercel.app",
     siteName: "Voting System",
     images: {
-      url: "/Captureone.png",
+      url: "/Captureone.PNG",
       width: 1200,
       height: 630,
       alt: "Voting System",
