@@ -61,6 +61,7 @@ export const RegisterUser = async ({
         faculty,
       },
     });
+    revalidatePath("/");
     return {
       success: true,
       message: "user register successfully",
@@ -111,6 +112,8 @@ export const AdminRegistering = async ({
         password: hashPassword,
       },
     });
+
+    revalidatePath("/");
     return {
       success: true,
       message: "admin register successfully",
@@ -236,6 +239,7 @@ export const CreateElectionInfo = async ({
         endTime,
       },
     });
+    revalidatePath("/");
     return {
       success: true,
       message: "Election Name Registered Successfully",
@@ -281,6 +285,7 @@ export const CreatePosition = async ({
         electionId,
       },
     });
+    revalidatePath("/");
     return {
       success: true,
       message: "Position created successfully",
@@ -342,7 +347,7 @@ export const CreateContestant = async ({
         positionId: contestantPositionId,
       },
     });
-
+    revalidatePath("/");
     return {
       success: true,
       message: "Contestant registered successfully",
@@ -417,7 +422,7 @@ export const SubmitSelectedContestant = async ({
         userId: updateVoters as string[],
       },
     });
-
+    revalidatePath("/");
     return {
       success: true,
       message: "Vote Added Successfully",
