@@ -25,9 +25,9 @@ export async function generateMetadata({
 }
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
+  noStore();
   const id = (await params).id;
   const now = new Date();
-  noStore();
   if (!id) {
     return redirect("/");
   }
