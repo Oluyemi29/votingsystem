@@ -10,23 +10,35 @@ export const metadata: Metadata = {
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id;
 
-  // const ContestantDetails =
-  const [ContestantDetails, ElectionDetails] = await Promise.all([
-    await prisma.contestant.findMany({
-      where: {
-        electionId: id,
-      },
-    }),
-    await prisma.election.findUnique({
-      where: {
-        id: id,
-      },
-    }),
-  ]);
+  const [ContestantDetails, ElectionDetails, AlreadyVotedUsers] =
+    await Promise.all([
+      await prisma.contestant.findMany({
+        where: {
+          electionId: id,
+        },
+      }),
+      await prisma.election.findUnique({
+        where: {
+          id: id,
+        },
+      }),
+      await prisma.election.findUnique({
+        where:{
+          id
+        },
+        select: {
+          userId: true,
+        },
+      }),
+    ]);
 
   return (
     <div>
-      <ContestantDetail ContestantDetails={ContestantDetails} ElectionDetails={ElectionDetails} />
+      <ContestantDetail
+        ContestantDetails={ContestantDetails}
+        ElectionDetails={ElectionDetails}
+        AlreadyVotedUsers={AlreadyVotedUsers}
+      />
     </div>
   );
 };

@@ -13,6 +13,8 @@ import {
 import { IoMdCheckmark } from "react-icons/io";
 import { SubmitSelectedContestant } from "@/app/api/Action";
 import toast from "react-hot-toast";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 type ContestantDetailsProps = {
   ContestantDetails: {
@@ -34,6 +36,9 @@ type ContestantDetailsProps = {
     startTime: Date;
     endTime: Date;
   } | null;
+  AlreadyVotedUsers: {
+    userId: string[];
+} | null
 };
 
 type SelectedContestantProps = {
@@ -42,14 +47,22 @@ type SelectedContestantProps = {
 const ContestantDetail = ({
   ContestantDetails,
   ElectionDetails,
+  AlreadyVotedUsers,
 }: ContestantDetailsProps) => {
+  const router = useRouter();
+  const { data: session } = useSession();
   const [modalVisible, setModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [theTime, setTheTime] = useState("");
   const [selectedContestant, setSelectedContestant] =
     useState<SelectedContestantProps>({});
   const [hideFuntionalButton, setHideFunctionalButton] = useState(true);
+  const [alreadyVoted, setAlreadyVoted] = useState(true);
 
+  useEffect(() => {
+    const result = AlreadyVotedUsers?.userId.includes(session?.user.id as string)
+    setAlreadyVoted(result ? true : false);
+  }, [AlreadyVotedUsers, session?.user.id]);
   useEffect(() => {
     const getElectionStartTimeCountdown = () => {
       const Interval = setInterval(() => {
@@ -121,11 +134,16 @@ const ContestantDetail = ({
           contestantId: eachVote[1],
         };
       });
-      const response = await SubmitSelectedContestant({ AllSelectedVote });
+      const response = await SubmitSelectedContestant({
+        AllSelectedVote,
+        userId: session?.user.id as string,
+        electId: ElectionDetails?.id as string,
+      });
       if (response.success === true) {
         toast.success(response.message);
         setSelectedContestant({});
         setModalVisible(false);
+        return router.push("/user");
       } else {
         toast.error(response.message);
       }
@@ -201,8 +219,12 @@ const ContestantDetail = ({
                         {eachContestant.position}
                       </h1>
                       <Button
-                        hidden={hideFuntionalButton}
-                        disabled={hideFuntionalButton}
+                        hidden={
+                          alreadyVoted || hideFuntionalButton ? true : false
+                        }
+                        disabled={
+                          alreadyVoted || hideFuntionalButton ? true : false
+                        }
                         className="text-white shadow-sm shadow-black bg-emerald-700 rounded-md mt-4 w-full"
                         size="sm"
                         onPress={() =>
@@ -227,8 +249,8 @@ const ContestantDetail = ({
               })}
               {Object.entries(selectedContestant).length > 0 && (
                 <Button
-                  hidden={hideFuntionalButton}
-                  disabled={hideFuntionalButton}
+                  hidden={alreadyVoted || hideFuntionalButton ? true : false}
+                  disabled={alreadyVoted || hideFuntionalButton ? true : false}
                   onPress={() => ClearAllSelected()}
                   className="bg-red-700 text-white shadow-sm shadow-black rounded-md"
                 >
@@ -239,7 +261,7 @@ const ContestantDetail = ({
               {loading ? (
                 <Button
                   disabled={true}
-                  hidden={hideFuntionalButton}
+                  hidden={alreadyVoted || hideFuntionalButton ? true : false}
                   className={`rounded-md bg-emerald-700 text-white shadow-sm shadow-black ${
                     Object.entries(selectedContestant).length < 1 &&
                     "col-span-2"
@@ -250,7 +272,7 @@ const ContestantDetail = ({
                 </Button>
               ) : (
                 <Button
-                  hidden={hideFuntionalButton}
+                  hidden={alreadyVoted || hideFuntionalButton ? true : false}
                   onPress={() => setModalVisible(true)}
                   disabled={Object.entries(selectedContestant).length < 1}
                   className={`rounded-md bg-emerald-700 text-white shadow-sm shadow-black ${
@@ -270,24 +292,24 @@ const ContestantDetail = ({
         <ModalContent>
           <ModalHeader>Submit Selected Contestant</ModalHeader>
           <ModalBody>
-            <p>Are you sure, you want to submit the the selected contestant,</p>
+            <p>Are you sure, you want to submit the selected contestant,</p>
             <p>
-              Note that, once submitted, it cant be reverse and you can only
+              Note that, once submitted, it cant be reversed and you can only
               vote once
             </p>
           </ModalBody>
           <ModalFooter>
             <Button
-              hidden={hideFuntionalButton}
-              disabled={hideFuntionalButton}
+              hidden={alreadyVoted || hideFuntionalButton ? true : false}
+              disabled={alreadyVoted || hideFuntionalButton ? true : false}
               onPress={() => setModalVisible(false)}
               className="text-white bg-red-700 rounded-md"
             >
               No
             </Button>
             <Button
-              hidden={hideFuntionalButton}
-              disabled={hideFuntionalButton}
+              hidden={alreadyVoted || hideFuntionalButton ? true : false}
+              disabled={alreadyVoted || hideFuntionalButton ? true : false}
               onPress={() => SubmitAllSelected()}
               className="text-white bg-emerald-700 rounded-md"
             >

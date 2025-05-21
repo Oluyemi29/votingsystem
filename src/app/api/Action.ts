@@ -361,19 +361,33 @@ type SubmitSelectedContestantProps = {
     positionId: string;
     contestantId: string;
   }[];
+  userId: string;
+  electId: string;
 };
 
 export const SubmitSelectedContestant = async ({
   AllSelectedVote,
+  userId,
+  electId,
 }: SubmitSelectedContestantProps) => {
   try {
-    if (AllSelectedVote.length < 1) {
+    if (AllSelectedVote.length < 1 || !userId || !electId) {
       return {
         success: false,
         message: "Kindly pick contestant of your choice",
       };
     }
-
+    const checkUser = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+    if (!checkUser) {
+      return {
+        success: false,
+        message: "Unauthorize access",
+      };
+    }
     AllSelectedVote.map(async (eachSelectedVote) => {
       return await prisma.contestant.update({
         where: {
@@ -385,6 +399,25 @@ export const SubmitSelectedContestant = async ({
         },
       });
     });
+
+    const electionVoters = await prisma.election.findUnique({
+      where: {
+        id: electId,
+      },
+      select: {
+        userId: true,
+      },
+    });
+    const updateVoters = [...(electionVoters?.userId as string[]), userId];
+    await prisma.election.update({
+      where: {
+        id: electId,
+      },
+      data: {
+        userId: updateVoters as string[],
+      },
+    });
+
     return {
       success: true,
       message: "Vote Added Successfully",

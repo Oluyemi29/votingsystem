@@ -47,6 +47,7 @@ model Election {
   updatedAt   DateTime     @updatedAt
   Position    Position[]
   Contestant  Contestant[]
+  userId      String[]
 }
 
 model Position {
