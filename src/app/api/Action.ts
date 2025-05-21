@@ -172,6 +172,7 @@ export const EditUser = async ({
         faculty,
       },
     });
+    revalidatePath("/");
     revalidatePath("/admin/alluser");
     return {
       success: true,
@@ -198,6 +199,7 @@ export const DeleteUser = async (id: string) => {
       id,
     },
   });
+  revalidatePath("/");
   revalidatePath("/admin/alluser");
   revalidatePath("/user");
   return {
@@ -408,6 +410,7 @@ export const DeleteElection = async (id: string) => {
       id,
     },
   });
+  revalidatePath("/");
   revalidatePath("/admin/allelection");
   revalidatePath("/admin/allposition");
   revalidatePath("/admin/allcontestant");
@@ -462,6 +465,7 @@ export const EditElection = async ({
         endTime,
       },
     });
+    revalidatePath("/");
     revalidatePath("/admin/allelection");
     revalidatePath("/admin/allposition");
     revalidatePath("/admin/allcontestant");
@@ -516,6 +520,7 @@ export const EditPosition = async ({
         electionId,
       },
     });
+    revalidatePath("/");
     revalidatePath("/admin/allposition");
     revalidatePath("/admin/allcontestant");
     return {
@@ -544,6 +549,7 @@ export const DeletePosition = async (id: string) => {
         id,
       },
     });
+    revalidatePath("/");
     revalidatePath("/admin/allposition");
     revalidatePath("/admin/allcontestant");
     revalidatePath("/user");
@@ -573,6 +579,7 @@ export const DeleteContestant = async (id: string) => {
         id,
       },
     });
+    revalidatePath("/");
     revalidatePath("/admin/allcontestant");
     revalidatePath("/user");
     return {
@@ -635,6 +642,7 @@ export const EditContestant = async ({
         electionId,
       },
     });
+    revalidatePath("/");
     revalidatePath("/admin/allcontestant");
     revalidatePath("/user");
     return {
