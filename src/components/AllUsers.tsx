@@ -495,11 +495,11 @@ const AllUsers = ({ allUsers }: AllUsersProps) => {
       >
         <DrawerContent>
           <DrawerHeader className="flex flex-col gap-1">
-            Drawer Title
+            Filtered By
           </DrawerHeader>
           <DrawerBody>
             <RadioGroup
-              label="Select your favorite city"
+              label="Select method to be filtered by"
               value={filteredBy.value}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 handleFilteredSelected(e.target.id, e.target.value);
