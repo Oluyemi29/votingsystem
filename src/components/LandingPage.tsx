@@ -15,7 +15,7 @@ const LandingPage = () => {
   }, [router]);
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center">
-      <div className="md:w-2/6 p-5 py-10 w-full border-2 border-emerald-700 rounded-lg ">
+      <div className="md:w-2/6 bg-white p-5 py-10 w-full border-2 border-emerald-700 rounded-lg ">
         <h1 className="text-center text-emerald-700 text-lg font-bold">
           Welcome
         </h1>

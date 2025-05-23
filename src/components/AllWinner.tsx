@@ -108,7 +108,6 @@ const AllWinner = ({ allWinners, allElections }: allWinnersprops) => {
         variant="bordered"
         onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
           setElection(e.target.value);
-          console.log(e.target.value);
         }}
       >
         {electionInfo.map((electionDetail) => (

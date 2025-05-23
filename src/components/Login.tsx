@@ -54,7 +54,6 @@ const Login = () => {
       } else {
         toast.error("error when tring to login");
       }
-      console.log(request);
       reset();
     } catch (error) {
       console.log(error);
@@ -63,8 +62,8 @@ const Login = () => {
     }
   };
   return (
-    <div className="w-full my-10 flex h-screen flex-col justify-center items-center">
-      <div className="md:w-2/6 border-2 border-emerald-700 rounded-lg p-5 py-5">
+    <div className="w-full py-10 flex h-screen flex-col justify-center items-center">
+      <div className="md:w-2/6 bg-white border-2 border-emerald-700 rounded-lg p-5 py-5">
         <Image
           src={"/ayede-logo2.png"}
           alt="Ayede"
@@ -100,7 +99,7 @@ const Login = () => {
             placeholder="Password"
             endContent={
               <div className="cursor-pointer" onClick={() => setPasswordVisible(!passwordVisible)}>
-                {passwordVisible ? <HiMiniEyeSlash /> : <IoEyeSharp />}
+                {passwordVisible ? <HiMiniEyeSlash color="black" /> : <IoEyeSharp color="black" />}
               </div>
             }
           />

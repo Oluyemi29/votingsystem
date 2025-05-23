@@ -73,7 +73,7 @@ const VoteResult = ({ ContestantScore }: ContestantScoreProps) => {
   
   return (
     <div className="w-full h-screen md:my-5 flex flex-col justify-center items-center">
-      <div className="md:w-2/6 border-2 border-emerald-700 rounded-lg p-5 w-full">
+      <div className="md:w-2/6 bg-white border-2 border-emerald-700 rounded-lg p-5 w-full">
         <UserNavbar />
         <h1 className="text-center my-3 text-[0.9rem] text-emerald-700 font-semibold">
           Vote Result

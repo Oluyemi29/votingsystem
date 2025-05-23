@@ -157,8 +157,8 @@ const ContestantDetail = ({
     setSelectedContestant({});
   };
   return (
-    <div className="w-full h-screen my-10 flex flex-col justify-center items-center">
-      <div className="md:w-2/6 border-2 border-emerald-700 rounded-lg p-5 w-full">
+    <div className="w-full h-screen py-10 flex flex-col justify-center items-center">
+      <div className="md:w-2/6 bg-white border-2 border-emerald-700 rounded-lg p-5 w-full">
         <UserNavbar />
         <h1 className="text-center text-emerald-700 mt-5 text-[0.8rem] font-semibold">
           Contestant Details
@@ -288,7 +288,7 @@ const ContestantDetail = ({
         )}
       </div>
 
-      <Modal isOpen={modalVisible} onClose={() => setModalVisible(false)}>
+      <Modal className="text-black" isOpen={modalVisible} onClose={() => setModalVisible(false)}>
         <ModalContent>
           <ModalHeader>Submit Selected Contestant</ModalHeader>
           <ModalBody>

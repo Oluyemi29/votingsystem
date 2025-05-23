@@ -51,7 +51,6 @@ const AdminLogin = () => {
       } else {
         toast.error("error when tring to login");
       }
-      console.log(request);
       reset();
     } catch (error) {
       console.log(error);
@@ -60,8 +59,8 @@ const AdminLogin = () => {
     }
   };
   return (
-    <div className="w-full my-10 flex h-screen flex-col justify-center items-center">
-      <div className="md:w-2/6 w-full border-2 border-emerald-700 rounded-lg p-5 py-5">
+    <div className="w-full py-10 flex h-screen flex-col justify-center items-center">
+      <div className="md:w-2/6 bg-white w-full border-2 border-emerald-700 rounded-lg p-5 py-5">
         <Image
           src={"/ayede-logo2.png"}
           alt="Ayede"
@@ -96,7 +95,7 @@ const AdminLogin = () => {
             type={passwordVisible ? "text" : "password"}
             endContent={
               <div className="cursor-pointer" onClick={() => setPasswordVisible(!passwordVisible)}>
-                {passwordVisible ? <HiMiniEyeSlash /> : <IoEyeSharp />}
+                {passwordVisible ? <HiMiniEyeSlash color="black" /> : <IoEyeSharp color="black" />}
               </div>
             }
             placeholder="Password"
@@ -124,7 +123,7 @@ const AdminLogin = () => {
         Dont have an account?{" "}
         <Link
           className="font-semibold underline underline-offset-2 italic"
-          href={"/register"}
+          href={"/admin/register"}
         >
           Register
         </Link>

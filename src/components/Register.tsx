@@ -94,7 +94,6 @@ const Register = () => {
         toast.error(response.message);
       }
 
-      console.log(email, matric, name, password, department, faculty, myImage);
 
       reset();
     } catch (error) {
@@ -104,8 +103,8 @@ const Register = () => {
     }
   };
   return (
-    <div className="w-full my-10 flex h-screen flex-col justify-center items-center">
-      <div className="md:w-2/6 border-2 border-emerald-700 rounded-lg p-5 py-5">
+    <div className="w-full py-10 flex h-screen flex-col justify-center items-center">
+      <div className="md:w-2/6 bg-white border-2 border-emerald-700 rounded-lg p-5 py-5">
         <Image
           src={"/ayede-logo2.png"}
           alt="Ayede"
@@ -185,14 +184,14 @@ const Register = () => {
                   className="cursor-pointer"
                   onClick={() => setPasswordVisible(!passwordVisible)}
                 >
-                  {passwordVisible ? <HiMiniEyeSlash /> : <IoEyeSharp />}
+                  {passwordVisible ? <HiMiniEyeSlash color="black" /> : <IoEyeSharp color="black" />}
                 </div>
               }
               placeholder="Password"
             />
-            <div>
+            <div className="bg-white">
               <Select
-                className="w-full"
+                className="w-full bg-white text-default-800"
                 label="Department"
                 placeholder="Select Your Department"
                 selectedKeys={[department]}
@@ -200,7 +199,7 @@ const Register = () => {
                 onChange={(e) => setDepartment(e.target.value)}
               >
                 {AllDepartments.map((department) => (
-                  <SelectItem key={department.key}>
+                  <SelectItem className="text-black" key={department.key}>
                     {department.label}
                   </SelectItem>
                 ))}
@@ -212,7 +211,7 @@ const Register = () => {
 
             <div>
               <Select
-                className="w-full"
+                className="w-full bg-white text-default-800"
                 label="Faculty"
                 placeholder="Select Your Faculty"
                 selectedKeys={[faculty]}
@@ -220,7 +219,7 @@ const Register = () => {
                 onChange={(e) => setFaculty(e.target.value)}
               >
                 {AllFaculties.map((faculty) => (
-                  <SelectItem key={faculty.key}>{faculty.label}</SelectItem>
+                  <SelectItem className="text-black" key={faculty.key}>{faculty.label}</SelectItem>
                 ))}
               </Select>
               <p className="text-default-500 text-small">

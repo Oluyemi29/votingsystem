@@ -3,6 +3,11 @@ import { DeleteUser, EditUser } from "@/app/api/Action";
 import { AllDepartments, AllFaculties } from "@/category/Categories";
 import {
   Button,
+  Drawer,
+  DrawerBody,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
   getKeyValue,
   Input,
   Modal,
@@ -10,6 +15,8 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Radio,
+  RadioGroup,
   Select,
   SelectItem,
   Table,
@@ -24,6 +31,9 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
+import { FaSearch } from "react-icons/fa";
+import { FaFilter } from "react-icons/fa";
+
 type AllUsersProps = {
   allUsers: {
     name: string;
@@ -36,6 +46,16 @@ type AllUsersProps = {
     faculty: string;
   }[];
 };
+type FilterUserProps = {
+  name: string;
+  id: string;
+  image: string;
+  email: string;
+  matric: string;
+  password: string;
+  department: string;
+  faculty: string;
+}[];
 type EditProps = {
   name: string;
   matric: string;
@@ -52,6 +72,13 @@ type DeleteProps = {
   faculty: string;
 };
 const AllUsers = ({ allUsers }: AllUsersProps) => {
+  const [isOpen, setisOpen] = useState(false);
+  const [filteredBy, setFilteredBy] = useState({
+    name: "Matric Number",
+    value: "matric",
+  });
+  const [filteredUser, setFilteredUser] = useState<FilterUserProps>(allUsers);
+  const [hideSearch, setHideSearch] = useState(true);
   const [department, setDepartment] = React.useState<string>("");
   const [faculty, setFaculty] = React.useState<string>("");
   const [loading, setLoading] = useState(false);
@@ -72,7 +99,42 @@ const AllUsers = ({ allUsers }: AllUsersProps) => {
     department: "",
     faculty: "",
   });
-  const rows = allUsers.map((eachUser, index) => {
+  const handleSearch = (searchValue: string) => {
+    if (filteredBy.value === "matric") {
+      const result = allUsers.filter((eachUser) => {
+        return eachUser.matric
+          .toLowerCase()
+          .includes(searchValue.toLowerCase());
+      });
+      setFilteredUser(result);
+    }
+    if (filteredBy.value === "name") {
+      const result = allUsers.filter((eachUser) => {
+        return eachUser.name.toLowerCase().includes(searchValue.toLowerCase());
+      });
+      setFilteredUser(result);
+    }
+    if (filteredBy.value === "department") {
+      const result = allUsers.filter((eachUser) => {
+        return eachUser.department
+          .toLowerCase()
+          .includes(searchValue.toLowerCase());
+      });
+      setFilteredUser(result);
+    }
+    if (filteredBy.value === "faculty") {
+      const result = allUsers.filter((eachUser) => {
+        return eachUser.faculty
+          .toLowerCase()
+          .includes(searchValue.toLowerCase());
+      });
+      setFilteredUser(result);
+    }
+    if (filteredBy.value === "") {
+      setFilteredUser(allUsers);
+    }
+  };
+  const rows = filteredUser.map((eachUser, index) => {
     const { id, name, department, faculty, email, matric } = eachUser;
     const details = {
       key: index,
@@ -246,6 +308,15 @@ const AllUsers = ({ allUsers }: AllUsersProps) => {
     }
   };
 
+  const handleFilteredSelected = (name: string, value: string) => {
+    setFilteredBy((prevData) => {
+      return {
+        ...prevData,
+        name,
+        value,
+      };
+    });
+  };
   return (
     <div>
       {/* Edit Modal */}
@@ -414,6 +485,101 @@ const AllUsers = ({ allUsers }: AllUsersProps) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
+
+      {/* Filtered by option */}
+      <Drawer
+        isOpen={isOpen}
+        onClose={() => setisOpen(false)}
+        placement={"left"}
+        size="md"
+      >
+        <DrawerContent>
+          <DrawerHeader className="flex flex-col gap-1">
+            Drawer Title
+          </DrawerHeader>
+          <DrawerBody>
+            <RadioGroup
+              label="Select your favorite city"
+              value={filteredBy.value}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                handleFilteredSelected(e.target.id, e.target.value);
+                setFilteredBy((prevData) => {
+                  return {
+                    ...prevData,
+                    name: e.target.id,
+                    value: e.target.value,
+                  };
+                });
+              }}
+            >
+              <Radio id="Name" value="name">
+                Name
+              </Radio>
+              <Radio id="Matric Number" value="matric">
+                Matric
+              </Radio>
+              <Radio id="Department" value="department">
+                Department
+              </Radio>
+              <Radio id="Faculty" name="Faculty" value="faculty">
+                Faculty
+              </Radio>
+            </RadioGroup>
+            <p className="text-default-500 text-small">
+              Filtered by: {filteredBy.name}
+            </p>
+          </DrawerBody>
+          <DrawerFooter>
+            <Button
+              color="danger"
+              variant="light"
+              onPress={() => {
+                setisOpen(false);
+                setFilteredBy((prevData) => {
+                  return {
+                    ...prevData,
+                    name: "",
+                    value: "",
+                  };
+                });
+              }}
+            >
+              Close
+            </Button>
+            <Button color="primary" onPress={() => setisOpen(false)}>
+              Done
+            </Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+
+      <div className="flex w-full flex-row mx-auto items-center p-5">
+        <div
+          className={`overflow-hidden inline-flex gap-5 items-center transition-all duration-500 ${
+            hideSearch ? "w-0 opacity-0" : "w-full opacity-100 mr-5"
+          }`}
+        >
+          <FaFilter
+            size={40}
+            onClick={() => setisOpen(true)}
+            className="text-emerald-700 cursor-pointer p-1 rounded-md border-2 border-emerald-600"
+          />
+
+          <Input
+            placeholder={`Search by ${filteredBy.name}`}
+            className=""
+            endContent={<FaSearch />}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              handleSearch(e.target.value);
+            }}
+          />
+        </div>
+        <FaSearch
+          size={40}
+          onClick={() => setHideSearch(!hideSearch)}
+          className="text-emerald-700 cursor-pointer p-1 rounded-md border-2 border-emerald-600"
+        />
+      </div>
       <Table isStriped aria-label="Example table with dynamic content">
         <TableHeader columns={columns}>
           {(column) => (

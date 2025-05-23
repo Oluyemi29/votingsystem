@@ -4,6 +4,7 @@ import UserNavbar from "./UserNavbar";
 import Link from "next/link";
 import { FaUserCheck } from "react-icons/fa6";
 
+
 type VoteResultProps = {
   VoteResult: {
     id: string;
@@ -18,7 +19,7 @@ type VoteResultProps = {
 const Result = ({ VoteResult }: VoteResultProps) => {
   return (
     <div className="w-full h-screen md:my-10 flex flex-col justify-center items-center">
-      <div className="md:w-2/6 w-full border-2 border-emerald-700 rounded-lg p-5">
+      <div className="md:w-2/6 bg-white  w-full border-2 border-emerald-700 rounded-lg p-5">
         <UserNavbar />
         <h1 className="text-center font-semibold my-5  text-emerald-700">
           View Results

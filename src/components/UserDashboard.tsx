@@ -11,7 +11,7 @@ const UserDashboard = () => {
 
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center">
-      <div className="md:w-2/6 w-full border-2 border-emerald-700 rounded-lg p-5 py-5">
+      <div className="md:w-2/6 bg-white w-full border-2 border-emerald-700 rounded-lg p-5 py-5">
         <div className="flex flex-row justify-between items-center">
           <h1 className="text-center text-emerald-700 font-semibold">
             Dashboard
