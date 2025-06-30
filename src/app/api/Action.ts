@@ -175,7 +175,7 @@ export const EditUser = async ({
         faculty,
       },
     });
-    revalidatePath("/admin");
+    revalidatePath("/admin", "page");
     return {
       success: true,
       message: "user edited successfully",
@@ -202,7 +202,7 @@ export const DeleteUser = async (id: string) => {
     },
   });
   // revalidatePath('/', 'layout')
-  revalidatePath("/admin");
+  revalidatePath("/admin", "page");
   revalidatePath("/user");
   return {
     success: true,
