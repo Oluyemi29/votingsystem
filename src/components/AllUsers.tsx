@@ -586,7 +586,7 @@ const AllUsers = ({ allUsers }: AllUsersProps) => {
             <TableColumn key={column.key}>{column.label}</TableColumn>
           )}
         </TableHeader>
-        <TableBody items={rows}>
+        <TableBody emptyContent={"No user available"} items={rows}>
           {(item) => (
             <TableRow key={item.key}>
               {(columnKey) => (

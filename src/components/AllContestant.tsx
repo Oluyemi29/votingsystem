@@ -601,7 +601,7 @@ const AllContestant = ({
             <TableColumn key={column.key}>{column.label}</TableColumn>
           )}
         </TableHeader>
-        <TableBody items={rows}>
+        <TableBody emptyContent={"No Contestant available"} items={rows}>
           {(item) => (
             <TableRow key={item.key}>
               {(columnKey) => (

@@ -335,7 +335,7 @@ const AllElection = ({ allElection }: AllElectionProps) => {
             <TableColumn key={column.key}>{column.label}</TableColumn>
           )}
         </TableHeader>
-        <TableBody items={rows}>
+        <TableBody emptyContent={"No election available"} items={rows}>
           {(item) => (
             <TableRow key={item.key}>
               {(columnKey) => (

@@ -371,7 +371,7 @@ const AllPosition = ({ allPosition, allElection }: AllPositionProps) => {
             <TableColumn key={column.key}>{column.label}</TableColumn>
           )}
         </TableHeader>
-        <TableBody items={rows}>
+        <TableBody emptyContent={"No position available"} items={rows}>
           {(item) => (
             <TableRow key={item.key}>
               {(columnKey) => (
